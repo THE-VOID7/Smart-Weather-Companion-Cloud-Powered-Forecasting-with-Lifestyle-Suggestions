@@ -124,6 +124,19 @@
     <footer class="mt-4 text-xs text-gray-600">Built with OpenWeatherMap (free API)</footer>
   </div>
 
+<!-- ================= CHATBOT ================= -->
+  <!-- <div id="chatbot" class="fixed bottom-5 right-5 w-80 bg-white rounded-xl shadow-lg p-3">
+    <h3 class="text-center font-semibold mb-2">🤖 Travel Chatbot</h3>
+    <div id="chat-history" class="h-48 overflow-y-auto border p-2 mb-2 text-sm"></div>
+    <div class="flex gap-2">
+      <input id="chat-input" type="text" placeholder="Ask me..." class="flex-1 border rounded p-1"/>
+      <button onclick="sendMessage()" class="px-3 py-1 bg-blue-600 text-white rounded">Send</button>
+    </div>
+  </div> -->
+  <!-- ========================================== -->
+
+
+
 <script>
 // ===== CONFIG =====
 const API_KEY = 'b45aed92194f834fedd73f173228fc9d'; // <-- Replace with your OpenWeatherMap API key
@@ -343,7 +356,59 @@ if(API_KEY && API_KEY!=='b45aed92194f834fedd73f173228fc9d'){
   const defaultCity = localStorage.getItem('wc_default_city');
   if(defaultCity) { el('cityInput').value = defaultCity; fetchAndRender(defaultCity); }
 }
+// chatbot #######################################################################
 
+// --- CHATBOT ---
+// async function sendMessage() {
+//   const inputField = document.getElementById("chat-input");
+//   const message = inputField.value.trim();
+//   if (!message) return;
+
+//   const chatHistory = document.getElementById("chat-history");
+
+//   // Show user message
+//   chatHistory.innerHTML += `<p><b>You:</b> ${message}</p>`;
+
+//   try {
+//     // Send request to backend server
+//     const res = await fetch("http://localhost:3000/chat", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ message })
+//     });
+
+//     const data = await res.json();
+
+//     // Show bot reply
+//     chatHistory.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
+//   } catch (err) {
+//     chatHistory.innerHTML += `<p class="text-red-500"><b>Bot:</b> Error connecting to server.</p>`;
+//   }
+
+//   // Scroll to bottom
+//   chatHistory.scrollTop = chatHistory.scrollHeight;
+
+//   // Clear input
+//   inputField.value = "";
+// }
 </script>
+<!-- ========== WATSON ASSISTANT CHATBOT ========== -->
+<script>
+  window.watsonAssistantChatOptions = {
+    integrationID: "066aa865-0f4f-436b-adcd-de841f00dc3e",
+    region: "au-syd",
+    serviceInstanceID: "37dae2b8-b1d4-4594-8cc1-6911ce7e90e9",
+    onLoad: async (instance) => { await instance.render(); }
+  };
+  setTimeout(function(){
+    const t = document.createElement('script');
+    t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" 
+            + (window.watsonAssistantChatOptions.clientVersion || 'latest') 
+            + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+  });
+</script>
+<!-- ============================================ -->
+
 </body>
 </html>
